@@ -6,8 +6,14 @@ using System.Web;
 
 namespace StoreApplication.DAL
 {
+    /// <summary>
+    /// Database.
+    /// </summary>
     public static class Database
     {
+        /// <summary>
+        /// List of items.
+        /// </summary>
         public static List<Item> ListOfItems { get; set; }
 
         /// <summary>

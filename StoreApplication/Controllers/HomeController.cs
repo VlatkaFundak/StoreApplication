@@ -81,6 +81,10 @@ namespace StoreApplication.Controllers
             return View(DAL.Database.ListOfItems.Find(item => item.Id == id));
         }
 
+        /// <summary>
+        /// More details.
+        /// </summary>
+        /// <returns>List of items view.</returns>
         public ActionResult MoreDetails()
         {
             return View(DAL.Database.ListOfItems);
