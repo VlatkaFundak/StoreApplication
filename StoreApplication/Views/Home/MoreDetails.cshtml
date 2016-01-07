@@ -1,0 +1,30 @@
+﻿@model IEnumerable<StoreApplication.Models.Item>
+
+
+@{
+    ViewBag.Title = "MoreDetails";
+}
+
+<h2>More Details</h2>
+
+<table>
+    <tr>
+        <th>@Html.Label("Name")</th>
+        <th>@Html.Label("Description")</th>
+        <th>@Html.Label("Category")</th>
+        <th>@Html.Label("Price")</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(model => item.Name)</td>
+            <td>@Html.DisplayFor(model => item.Description)</td>
+            <td>@Html.DisplayFor(model => item.Category)</td>
+            <td>@Html.DisplayFor(model => item.Price)</td>
+        </tr>
+    }
+
+</table>
+
+@Html.ActionLink("Back","Back")
+

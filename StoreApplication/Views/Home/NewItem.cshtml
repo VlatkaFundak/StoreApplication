@@ -1,0 +1,29 @@
+﻿@model StoreApplication.Models.Item
+
+@{
+    ViewBag.Title = "NewItem";
+}
+
+<h2>NewItem</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.Name)
+    @Html.EditorFor(model => model.Name)
+
+    @Html.LabelFor(model => model.Description)
+    @Html.EditorFor(model => model.Description)
+    
+    @Html.LabelFor(model => model.Price)
+    @Html.EditorFor(model => model.Price)
+    
+    @Html.LabelFor(model => model.Category)
+    @Html.EditorFor(model => model.Category)
+
+    <input type="submit" value="Save">
+}
+
+@Html.ActionLink("Cancel", "Cancel", "Home");
+
+
+

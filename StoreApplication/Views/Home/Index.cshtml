@@ -1,0 +1,32 @@
+﻿@model IEnumerable<StoreApplication.Models.Item>
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Home</h2>
+
+<p>@Html.ActionLink("Create new item","NewItem", "Home")</p>
+<p>@Html.ActionLink("More details", "MoreDetails", "Home")</p>
+
+<table>
+    <tr>
+        <th>@Html.Label("Name")</th>
+        <th>@Html.Label("Category")</th>
+        <th>@Html.Label("Price")</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Category)</td>
+            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { item.Id })
+                @Html.ActionLink("Details", "ItemDetails", new { item.Id })
+            </td>
+        </tr>
+    }
+</table>
+

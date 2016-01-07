@@ -1,0 +1,28 @@
+﻿@model StoreApplication.Models.Item
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Item Details</h2>
+
+@using (Html.BeginForm())
+{
+@Html.LabelFor(model => model.Name)
+<p>@Model.Name</p>
+
+@Html.LabelFor(model => model.Description)
+<p>@Model.Description</p>
+
+@Html.LabelFor(model => model.Category)
+<p>@Model.Category</p>
+
+@Html.LabelFor(model => model.Price)
+<br />
+<p>@Model.Price</p>
+
+}
+
+@Html.ActionLink("Back","Back","Home")
+
+
