@@ -16,3 +16,7 @@ F:\Programiranje\VSProjekti\Practise\WebPractise\StoreApplication\StoreApplicati
 F:\Programiranje\VSProjekti\Practise\WebPractise\StoreApplication\StoreApplication\obj\Debug\StoreApplication.csprojResolveAssemblyReference.cache
 F:\Programiranje\VSProjekti\Practise\WebPractise\StoreApplication\StoreApplication\obj\Debug\StoreApplication.dll
 F:\Programiranje\VSProjekti\Practise\WebPractise\StoreApplication\StoreApplication\obj\Debug\StoreApplication.pdb
+F:\Programiranje\VSProjekti\Practise\WebPractise\StoreApplication\StoreApplication\bin\EntityFramework.dll
+F:\Programiranje\VSProjekti\Practise\WebPractise\StoreApplication\StoreApplication\bin\EntityFramework.SqlServer.dll
+F:\Programiranje\VSProjekti\Practise\WebPractise\StoreApplication\StoreApplication\bin\EntityFramework.xml
+F:\Programiranje\VSProjekti\Practise\WebPractise\StoreApplication\StoreApplication\bin\EntityFramework.SqlServer.xml

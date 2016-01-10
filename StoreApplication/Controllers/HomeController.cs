@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Linq;
 using StoreApplication.Models;
+using StoreApplication.Entities;
 
 namespace StoreApplication.Controllers
 {
@@ -16,7 +16,23 @@ namespace StoreApplication.Controllers
         /// <returns>Home page.</returns>
         public ActionResult Index()
         {
-            return View(DAL.Database.ListOfItems);
+            StoreAppDBEntities DataBase = new StoreAppDBEntities();
+            List<StoreApplication.Entities.Item> entityList = DataBase.Items.ToList();
+            List<StoreApplication.Models.ItemModel> modelList = new List<Models.ItemModel>();
+
+            foreach (var item in entityList)
+            {
+                ItemModel newItem = new ItemModel();
+                newItem.Id = item.Id;
+                newItem.Name = item.Name;
+                newItem.Description = item.Description;
+                newItem.Category = item.Category;
+                newItem.Price = item.Price;
+
+                modelList.Add(newItem);
+            }
+
+            return View(modelList);
         }
 
         /// <summary>
@@ -26,8 +42,10 @@ namespace StoreApplication.Controllers
         /// <returns>Index page with list.</returns>
         public ActionResult Delete(Guid id)
         {
-            var selectedItem = DAL.Database.ListOfItems.Find(item => item.Id == id);
-            DAL.Database.ListOfItems.Remove(selectedItem);
+            StoreAppDBEntities Database = new StoreAppDBEntities();
+            var selectedItem = Database.Items.ToList().Find(item => item.Id == id);
+            Database.Items.Remove(selectedItem);
+            Database.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -55,7 +73,7 @@ namespace StoreApplication.Controllers
         /// <returns>New item page.</returns>
         public ActionResult NewItem()
         {
-            return View(new Item());
+            return View(new StoreApplication.Models.ItemModel());
         }
 
         /// <summary>
@@ -64,12 +82,28 @@ namespace StoreApplication.Controllers
         /// <param name="item">Item</param>
         /// <returns>List of items.</returns>
         [HttpPost]
-        public ActionResult NewItem(Item item)
+        public ActionResult NewItem(StoreApplication.Models.ItemModel item)
         {
-            item.Id = Guid.NewGuid();
-            
-            DAL.Database.ListOfItems.Add(item);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                item.Id = Guid.NewGuid();
+
+                Item entity = new Item();
+                entity.Id = item.Id;
+                entity.Name = item.Name;
+                entity.Description = item.Description;
+                entity.Category = item.Category;
+                entity.Price = item.Price;
+
+                StoreAppDBEntities Database = new StoreAppDBEntities();
+                Database.Items.Add(entity);
+                Database.SaveChanges();
+                
+                return RedirectToAction("Index");
+            }
+            else
+                return View();
+
         }
 
         /// <summary>
@@ -78,7 +112,17 @@ namespace StoreApplication.Controllers
         /// <returns>Item details view.</returns>
         public ActionResult ItemDetails(Guid id)
         {
-            return View(DAL.Database.ListOfItems.Find(item => item.Id == id));
+            StoreAppDBEntities Database = new StoreAppDBEntities();
+            var selectedItem = Database.Items.ToList().Find(item => item.Id == id);
+
+            ItemModel itemModel = new ItemModel();
+            itemModel.Id = selectedItem.Id;
+            itemModel.Description = selectedItem.Description;
+            itemModel.Name = selectedItem.Name;
+            itemModel.Category = selectedItem.Category;
+            itemModel.Price = selectedItem.Price;
+
+            return View(itemModel);
         }
 
         /// <summary>
@@ -87,7 +131,24 @@ namespace StoreApplication.Controllers
         /// <returns>List of items view.</returns>
         public ActionResult MoreDetails()
         {
-            return View(DAL.Database.ListOfItems);
+            StoreAppDBEntities Database = new StoreAppDBEntities();
+
+            List<ItemModel> modelList = new List<ItemModel>();
+            List<Item> entityList = Database.Items.ToList();
+
+            foreach (var item in entityList)
+            {
+                ItemModel modelItem = new ItemModel();
+                modelItem.Id = item.Id;
+                modelItem.Name = item.Name;
+                modelItem.Description = item.Description;
+                modelItem.Category = item.Category;
+                modelItem.Price = item.Price;
+
+                modelList.Add(modelItem);
+            }
+
+            return View(modelList);
         }
     }
 }
