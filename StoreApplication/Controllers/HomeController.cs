@@ -17,7 +17,7 @@ namespace StoreApplication.Controllers
         public ActionResult Index()
         {
             StoreAppDBEntities DataBase = new StoreAppDBEntities();
-            List<StoreApplication.Entities.Item> entityList = DataBase.Items.ToList();
+            List<StoreApplication.Entities.Item> entityList = DataBase.Item.ToList();
             List<StoreApplication.Models.ItemModel> modelList = new List<Models.ItemModel>();
 
             foreach (var item in entityList)
@@ -26,7 +26,7 @@ namespace StoreApplication.Controllers
                 newItem.Id = item.Id;
                 newItem.Name = item.Name;
                 newItem.Description = item.Description;
-                newItem.Category = item.Category;
+                newItem.Category = item.ItemCategory.Names;
                 newItem.Price = item.Price;
 
                 modelList.Add(newItem);
@@ -43,8 +43,8 @@ namespace StoreApplication.Controllers
         public ActionResult Delete(Guid id)
         {
             StoreAppDBEntities Database = new StoreAppDBEntities();
-            var selectedItem = Database.Items.ToList().Find(item => item.Id == id);
-            Database.Items.Remove(selectedItem);
+            var selectedItem = Database.Item.ToList().Find(item => item.Id == id);
+            Database.Item.Remove(selectedItem);
             Database.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -82,7 +82,7 @@ namespace StoreApplication.Controllers
         /// <param name="item">Item</param>
         /// <returns>List of items.</returns>
         [HttpPost]
-        public ActionResult NewItem(StoreApplication.Models.ItemModel item)
+        public ActionResult NewItem(ItemModel item)
         {
             if (ModelState.IsValid)
             {
@@ -92,11 +92,11 @@ namespace StoreApplication.Controllers
                 entity.Id = item.Id;
                 entity.Name = item.Name;
                 entity.Description = item.Description;
-                entity.Category = item.Category;
+                entity.ItemCategory.Names = item.Category;
                 entity.Price = item.Price;
 
                 StoreAppDBEntities Database = new StoreAppDBEntities();
-                Database.Items.Add(entity);
+                Database.Item.Add(entity);
                 Database.SaveChanges();
                 
                 return RedirectToAction("Index");
@@ -113,13 +113,13 @@ namespace StoreApplication.Controllers
         public ActionResult ItemDetails(Guid id)
         {
             StoreAppDBEntities Database = new StoreAppDBEntities();
-            var selectedItem = Database.Items.ToList().Find(item => item.Id == id);
+            var selectedItem = Database.Item.ToList().Find(item => item.Id == id);
 
             ItemModel itemModel = new ItemModel();
             itemModel.Id = selectedItem.Id;
             itemModel.Description = selectedItem.Description;
             itemModel.Name = selectedItem.Name;
-            itemModel.Category = selectedItem.Category;
+            itemModel.Category = selectedItem.ItemCategory.Names;
             itemModel.Price = selectedItem.Price;
 
             return View(itemModel);
@@ -134,7 +134,7 @@ namespace StoreApplication.Controllers
             StoreAppDBEntities Database = new StoreAppDBEntities();
 
             List<ItemModel> modelList = new List<ItemModel>();
-            List<Item> entityList = Database.Items.ToList();
+            List<Item> entityList = Database.Item.ToList();
 
             foreach (var item in entityList)
             {
@@ -142,8 +142,10 @@ namespace StoreApplication.Controllers
                 modelItem.Id = item.Id;
                 modelItem.Name = item.Name;
                 modelItem.Description = item.Description;
-                modelItem.Category = item.Category;
+                modelItem.Category = item.ItemCategory.Names;
                 modelItem.Price = item.Price;
+
+                Database.SaveChanges();
 
                 modelList.Add(modelItem);
             }

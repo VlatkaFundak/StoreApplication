@@ -25,6 +25,8 @@ namespace StoreApplication.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<Item> Item { get; set; }
+        public virtual DbSet<ItemCategory> ItemCategory { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

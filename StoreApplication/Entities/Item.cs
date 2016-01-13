@@ -17,7 +17,9 @@ namespace StoreApplication.Entities
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Category { get; set; }
         public decimal Price { get; set; }
+        public System.Guid CategoryId { get; set; }
+    
+        public virtual ItemCategory ItemCategory { get; set; }
     }
 }

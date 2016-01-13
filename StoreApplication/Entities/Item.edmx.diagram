@@ -4,8 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6728aea675bb41fcb20eab034b7e6278" Name="Diagram1">
-        <EntityTypeShape EntityType="StoreAppDBModel.Item" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="6c12806bc50b4ca7b7a96d93185ce056" Name="Diagram1">
+        <EntityTypeShape EntityType="StoreAppDBModel.Item" Width="1.5" PointX="3.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoreAppDBModel.ItemCategory" Width="1.5" PointX="1.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StoreAppDBModel.sysdiagrams" Width="1.5" PointX="0.5" PointY="2.5" IsExpanded="false" />
+        <AssociationConnector Association="StoreAppDBModel.FK_Item_ItemCategory1" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
