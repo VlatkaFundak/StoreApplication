@@ -19,14 +19,14 @@
     @Html.LabelFor(model => model.Price)
     @Html.EditorFor(model => model.Price)
     
-    @Html.LabelFor(model => model.Category)
-    @Html.EditorFor(model => model.Category)
+    @*@Html.LabelFor(model => model.Category)
+    @Html.EditorFor(model => model.Category)*@
+    
+    @Html.DropDownListFor(model => model.CategoryId, (SelectList)ViewBag.Categories, "Select a category");
     
     <br />
-    
-
-
     <br />
+    
     <input type="submit" value="Save">
 }
 

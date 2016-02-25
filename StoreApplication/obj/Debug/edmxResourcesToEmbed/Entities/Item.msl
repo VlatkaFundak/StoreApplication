@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="StoreAppDBModelStoreContainer" CdmEntityContainer="StoreAppDBEntities">
+  <EntityContainerMapping StorageEntityContainer="StoreAppDBEntitiesModelStoreContainer" CdmEntityContainer="StoreAppDBEntitiesEntities2">
     <EntitySetMapping Name="Item">
-      <EntityTypeMapping TypeName="StoreAppDBModel.Item">
+      <EntityTypeMapping TypeName="StoreAppDBEntitiesModel.Item">
         <MappingFragment StoreEntitySet="Item">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -13,15 +13,15 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ItemCategory">
-      <EntityTypeMapping TypeName="StoreAppDBModel.ItemCategory">
+      <EntityTypeMapping TypeName="StoreAppDBEntitiesModel.ItemCategory">
         <MappingFragment StoreEntitySet="ItemCategory">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Names" ColumnName="Names" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="StoreAppDBModel.sysdiagrams">
+      <EntityTypeMapping TypeName="StoreAppDBEntitiesModel.sysdiagrams">
         <MappingFragment StoreEntitySet="sysdiagrams">
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="principal_id" ColumnName="principal_id" />

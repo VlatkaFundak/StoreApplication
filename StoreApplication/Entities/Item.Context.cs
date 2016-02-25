@@ -13,10 +13,10 @@ namespace StoreApplication.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StoreAppDBEntities : DbContext
+    public partial class StoreAppDBEntitiesEntities2 : DbContext
     {
-        public StoreAppDBEntities()
-            : base("name=StoreAppDBEntities")
+        public StoreAppDBEntitiesEntities2()
+            : base("name=StoreAppDBEntitiesEntities2")
         {
         }
     

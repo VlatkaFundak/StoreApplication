@@ -20,7 +20,7 @@ namespace StoreApplication.Entities
         }
     
         public System.Guid Id { get; set; }
-        public string Names { get; set; }
+        public string Category { get; set; }
     
         public virtual ICollection<Item> Item { get; set; }
     }

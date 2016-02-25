@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using StoreApplication.Models;
 using StoreApplication.Entities;
+using AutoMapper;
 
 namespace StoreApplication.Controllers
 {
@@ -16,23 +17,17 @@ namespace StoreApplication.Controllers
         /// <returns>Home page.</returns>
         public ActionResult Index()
         {
-            StoreAppDBEntities DataBase = new StoreAppDBEntities();
+            StoreAppDBEntitiesEntities2 DataBase = new StoreAppDBEntitiesEntities2();
             List<StoreApplication.Entities.Item> entityList = DataBase.Item.ToList();
-            List<StoreApplication.Models.ItemModel> modelList = new List<Models.ItemModel>();
 
-            foreach (var item in entityList)
-            {
-                ItemModel newItem = new ItemModel();
-                newItem.Id = item.Id;
-                newItem.Name = item.Name;
-                newItem.Description = item.Description;
-                newItem.Category = item.ItemCategory.Names;
-                newItem.Price = item.Price;
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Item,ItemModel>()
+               
+                );
+            var mapper = config.CreateMapper();
 
-                modelList.Add(newItem);
-            }
+            List<ItemModel> listModels = mapper.Map<List<Item>, List<ItemModel>>(entityList);
 
-            return View(modelList);
+            return View(listModels);
         }
 
         /// <summary>
@@ -42,7 +37,7 @@ namespace StoreApplication.Controllers
         /// <returns>Index page with list.</returns>
         public ActionResult Delete(Guid id)
         {
-            StoreAppDBEntities Database = new StoreAppDBEntities();
+            StoreAppDBEntitiesEntities2 Database = new StoreAppDBEntitiesEntities2();
             var selectedItem = Database.Item.ToList().Find(item => item.Id == id);
             Database.Item.Remove(selectedItem);
             Database.SaveChanges();
@@ -73,6 +68,9 @@ namespace StoreApplication.Controllers
         /// <returns>New item page.</returns>
         public ActionResult NewItem()
         {
+            StoreAppDBEntitiesEntities2 Database = new StoreAppDBEntitiesEntities2();
+            ViewBag.Categories = new SelectList(Database.ItemCategory, "Id", "Category");
+
             return View(new StoreApplication.Models.ItemModel());
         }
 
@@ -84,19 +82,26 @@ namespace StoreApplication.Controllers
         [HttpPost]
         public ActionResult NewItem(ItemModel item)
         {
+            StoreAppDBEntitiesEntities2 Database = new StoreAppDBEntitiesEntities2();
+            ViewBag.Categories = new SelectList(Database.ItemCategory, "Id", "Category");
+
             if (ModelState.IsValid)
             {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ItemModel, Item>());
+                var mapper = config.CreateMapper();
+
                 item.Id = Guid.NewGuid();
 
-                Item entity = new Item();
-                entity.Id = item.Id;
-                entity.Name = item.Name;
-                entity.Description = item.Description;
-                entity.ItemCategory.Names = item.Category;
-                entity.Price = item.Price;
+                Item dbo = mapper.Map<Item>(item);
 
-                StoreAppDBEntities Database = new StoreAppDBEntities();
-                Database.Item.Add(entity);
+                //entity.Id = item.Id;
+                //entity.Name = item.Name;
+                //entity.Description = item.Description;
+                //entity.CategoryId= item.CategoryId;
+                //entity.Price = item.Price;
+
+                Database.Item.Add(dbo);
+
                 Database.SaveChanges();
                 
                 return RedirectToAction("Index");
@@ -112,17 +117,18 @@ namespace StoreApplication.Controllers
         /// <returns>Item details view.</returns>
         public ActionResult ItemDetails(Guid id)
         {
-            StoreAppDBEntities Database = new StoreAppDBEntities();
+            StoreAppDBEntitiesEntities2 Database = new StoreAppDBEntitiesEntities2();
             var selectedItem = Database.Item.ToList().Find(item => item.Id == id);
 
-            ItemModel itemModel = new ItemModel();
-            itemModel.Id = selectedItem.Id;
-            itemModel.Description = selectedItem.Description;
-            itemModel.Name = selectedItem.Name;
-            itemModel.Category = selectedItem.ItemCategory.Names;
-            itemModel.Price = selectedItem.Price;
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Item, ItemModel>()
+                //.ForMember(categoryMember => categoryMember.Category.Category,
+                //m => m.MapFrom(member => member.ItemCategory.Item))
+                );
+            var mapper = config.CreateMapper();
 
-            return View(itemModel);
+            ItemModel dto = mapper.Map<ItemModel>(selectedItem);
+
+            return View(dto);
         }
 
         /// <summary>
@@ -131,26 +137,20 @@ namespace StoreApplication.Controllers
         /// <returns>List of items view.</returns>
         public ActionResult MoreDetails()
         {
-            StoreAppDBEntities Database = new StoreAppDBEntities();
+            StoreAppDBEntitiesEntities2 Database = new StoreAppDBEntitiesEntities2();
 
             List<ItemModel> modelList = new List<ItemModel>();
             List<Item> entityList = Database.Item.ToList();
 
-            foreach (var item in entityList)
-            {
-                ItemModel modelItem = new ItemModel();
-                modelItem.Id = item.Id;
-                modelItem.Name = item.Name;
-                modelItem.Description = item.Description;
-                modelItem.Category = item.ItemCategory.Names;
-                modelItem.Price = item.Price;
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Item, ItemModel>());
+            var mapper = config.CreateMapper();
 
-                Database.SaveChanges();
+            List<ItemModel> dto =  mapper.Map<List<Item>, List<ItemModel>>(entityList);
 
-                modelList.Add(modelItem);
-            }
+            Database.SaveChanges();               
 
-            return View(modelList);
+
+            return View(dto);
         }
     }
 }

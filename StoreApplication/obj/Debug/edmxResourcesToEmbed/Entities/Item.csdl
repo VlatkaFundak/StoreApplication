@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="StoreAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="StoreAppDBEntitiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Item">
     <Key>
       <PropertyRef Name="Id" />
@@ -9,15 +9,15 @@
     <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="CategoryId" Type="Guid" Nullable="false" />
-    <NavigationProperty Name="ItemCategory" Relationship="Self.FK_Item_ItemCategory1" FromRole="Item" ToRole="ItemCategory" />
+    <NavigationProperty Name="ItemCategory" Relationship="Self.FK_Item_ItemCategory" FromRole="Item" ToRole="ItemCategory" />
   </EntityType>
   <EntityType Name="ItemCategory">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Guid" Nullable="false" />
-    <Property Name="Names" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Item" Relationship="Self.FK_Item_ItemCategory1" FromRole="ItemCategory" ToRole="Item" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="Self.FK_Item_ItemCategory" FromRole="ItemCategory" ToRole="Item" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -29,7 +29,7 @@
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
-  <Association Name="FK_Item_ItemCategory1">
+  <Association Name="FK_Item_ItemCategory">
     <End Role="ItemCategory" Type="Self.ItemCategory" Multiplicity="1" />
     <End Role="Item" Type="Self.Item" Multiplicity="*" />
     <ReferentialConstraint>
@@ -41,11 +41,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="StoreAppDBEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="StoreAppDBEntitiesEntities2" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Item" EntityType="Self.Item" />
     <EntitySet Name="ItemCategory" EntityType="Self.ItemCategory" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-    <AssociationSet Name="FK_Item_ItemCategory1" Association="Self.FK_Item_ItemCategory1">
+    <AssociationSet Name="FK_Item_ItemCategory" Association="Self.FK_Item_ItemCategory">
       <End Role="ItemCategory" EntitySet="ItemCategory" />
       <End Role="Item" EntitySet="Item" />
     </AssociationSet>

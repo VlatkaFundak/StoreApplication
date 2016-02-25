@@ -38,6 +38,8 @@ namespace StoreApplication.Models
         /// Category of the product.
         /// </summary>
         [Required( ErrorMessage = "Please enter category.")]
-        public virtual string Category { get; set; }
+        public virtual Guid CategoryId { get; set; }
+
+        public virtual ItemCategory Category { get; set; }
     }
 }

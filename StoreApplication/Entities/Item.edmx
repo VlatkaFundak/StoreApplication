@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StoreAppDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="StoreAppDBEntitiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="Id" />
@@ -20,7 +20,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Names" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -32,7 +32,7 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK_Item_ItemCategory1">
+        <Association Name="FK_Item_ItemCategory">
           <End Role="ItemCategory" Type="Self.ItemCategory" Multiplicity="1" />
           <End Role="Item" Type="Self.Item" Multiplicity="*" />
           <ReferentialConstraint>
@@ -44,11 +44,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="StoreAppDBModelStoreContainer">
+        <EntityContainer Name="StoreAppDBEntitiesModelStoreContainer">
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemCategory" EntityType="Self.ItemCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Item_ItemCategory1" Association="Self.FK_Item_ItemCategory1">
+          <AssociationSet Name="FK_Item_ItemCategory" Association="Self.FK_Item_ItemCategory">
             <End Role="ItemCategory" EntitySet="ItemCategory" />
             <End Role="Item" EntitySet="Item" />
           </AssociationSet>
@@ -57,7 +57,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="StoreAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="StoreAppDBEntitiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="Id" />
@@ -67,15 +67,15 @@
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="CategoryId" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="ItemCategory" Relationship="Self.FK_Item_ItemCategory1" FromRole="Item" ToRole="ItemCategory" />
+          <NavigationProperty Name="ItemCategory" Relationship="Self.FK_Item_ItemCategory" FromRole="Item" ToRole="ItemCategory" />
         </EntityType>
         <EntityType Name="ItemCategory">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Names" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_Item_ItemCategory1" FromRole="ItemCategory" ToRole="Item" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK_Item_ItemCategory" FromRole="ItemCategory" ToRole="Item" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -87,7 +87,7 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="FK_Item_ItemCategory1">
+        <Association Name="FK_Item_ItemCategory">
           <End Role="ItemCategory" Type="Self.ItemCategory" Multiplicity="1" />
           <End Role="Item" Type="Self.Item" Multiplicity="*" />
           <ReferentialConstraint>
@@ -99,11 +99,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="StoreAppDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="StoreAppDBEntitiesEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Item" EntityType="Self.Item" />
           <EntitySet Name="ItemCategory" EntityType="Self.ItemCategory" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <AssociationSet Name="FK_Item_ItemCategory1" Association="Self.FK_Item_ItemCategory1">
+          <AssociationSet Name="FK_Item_ItemCategory" Association="Self.FK_Item_ItemCategory">
             <End Role="ItemCategory" EntitySet="ItemCategory" />
             <End Role="Item" EntitySet="Item" />
           </AssociationSet>
@@ -113,9 +113,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StoreAppDBModelStoreContainer" CdmEntityContainer="StoreAppDBEntities">
+        <EntityContainerMapping StorageEntityContainer="StoreAppDBEntitiesModelStoreContainer" CdmEntityContainer="StoreAppDBEntitiesEntities2">
           <EntitySetMapping Name="Item">
-            <EntityTypeMapping TypeName="StoreAppDBModel.Item">
+            <EntityTypeMapping TypeName="StoreAppDBEntitiesModel.Item">
               <MappingFragment StoreEntitySet="Item">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -126,15 +126,15 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ItemCategory">
-            <EntityTypeMapping TypeName="StoreAppDBModel.ItemCategory">
+            <EntityTypeMapping TypeName="StoreAppDBEntitiesModel.ItemCategory">
               <MappingFragment StoreEntitySet="ItemCategory">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Names" ColumnName="Names" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="StoreAppDBModel.sysdiagrams">
+            <EntityTypeMapping TypeName="StoreAppDBEntitiesModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />

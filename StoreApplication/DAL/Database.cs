@@ -14,7 +14,7 @@ namespace StoreApplication.DAL
         /// <summary>
         /// List of items.
         /// </summary>
-        public static List<ItemModel> ListOfItems { get; set; }
+        //public static List<ItemModel> ListOfItems { get; set; }
 
         /// <summary>
         /// Class constructor.
